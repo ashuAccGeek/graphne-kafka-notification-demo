@@ -39,8 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'books',
-    'graphene_django'
+    'graphene_django',
+    'kafka'
 ]
+
+KAFKA_SETTINGS = {
+    'bootstrap_servers': 'localhost:9092',  # Specify Kafka broker(s)
+    'group_id': 'kafka',            # Specify consumer group ID
+
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
