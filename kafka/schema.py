@@ -1,4 +1,4 @@
-from confluent_kafka import Producer,Consumer
+from confluent_kafka import Producer
 from graphene_django import DjangoObjectType, DjangoListField
 import graphene
 from .models import KafkaEg
@@ -10,14 +10,7 @@ producer_config = {
     'bootstrap.servers': 'localhost:9092',
 }
 
-# Kafka consumer configuration
-consumer_config = {
-    'bootstrap.servers': 'localhost:9092',
-    'group.id': 'my-consumer-group',
-}
-
-
-#graphQL Queries and MUtations
+#graphQL Queries and Mutations
 
  #Queries
 class KafkaEgType(DjangoObjectType):
@@ -48,29 +41,13 @@ class CreateKafkaEg(graphene.Mutation):
 class KafkaEgMutation(graphene.ObjectType):
     create_kafka = CreateKafkaEg.Field()
 
-
-
-#utility functions for producer and consumer kafka
+#Utility function for producer kafka
     
 # Kafka producer function
 def produce_message(topic, message):
     producer = Producer(producer_config)
     producer.produce(topic, message.encode('utf-8'))
     producer.flush()
-
-# Kafka consumer function
-def consume_message(topic):
-    consumer = Consumer(consumer_config)
-    consumer.subscribe([topic])
-
-    while True:
-        msg = consumer.poll(timeout=1.0)
-        if msg is None:
-            continue
-        if msg.error():
-            print("Consumer error: {}".format(msg.error()))
-            continue
-        print("Received message: {}".format(msg.value().decode('utf-8')))
 
 class Query(KafkaEgQuery, graphene.ObjectType):
     pass
