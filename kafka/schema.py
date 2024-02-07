@@ -1,5 +1,5 @@
 from confluent_kafka import Producer,Consumer
-from graphene_django import DjangoObjectType, DjangoListField, DjangoMutation
+from graphene_django import DjangoObjectType, DjangoListField
 import graphene
 from .models import KafkaEg
 
@@ -16,6 +16,10 @@ consumer_config = {
     'group.id': 'my-consumer-group',
 }
 
+
+#graphQL Queries and MUtations
+
+ #Queries
 class KafkaEgType(DjangoObjectType):
     class Meta:
         model = KafkaEg
@@ -25,24 +29,29 @@ class KafkaEgQuery(graphene.ObjectType):
     kafka = DjangoListField(KafkaEgType)
 
 
-class CreateKafkaEg(DjangoMutation):
+ #Mutation
+class CreateKafkaEg(graphene.Mutation):
     class Arguments:
-        name = graphene.String(required=True)
+        title = graphene.String(required=True)
 
     kafka = graphene.Field(KafkaEgType)
 
-    @staticmethod
-    def mutate(root, info, title):
+    @classmethod
+    def mutate(cls,root, info, title):
+        kafka = KafkaEg.objects.create(title=title)
+
         # Produce a message to Kafka topic
         produce_message('kafka_django', f'New KafkaEg created: {title}')
 
-        kafka = KafkaEg.objects.create(title=title)
         return CreateKafkaEg(kafka=kafka)
 
 class KafkaEgMutation(graphene.ObjectType):
     create_kafka = CreateKafkaEg.Field()
 
 
+
+#utility functions for producer and consumer kafka
+    
 # Kafka producer function
 def produce_message(topic, message):
     producer = Producer(producer_config)
