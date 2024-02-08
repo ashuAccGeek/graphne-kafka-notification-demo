@@ -8,6 +8,10 @@ django = "*"
 graphene = "*"
 graphene-django = "*"
 confluent-kafka = "*"
+django-push-notifications = "*"
+onesignal = "*"
+django-environ = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

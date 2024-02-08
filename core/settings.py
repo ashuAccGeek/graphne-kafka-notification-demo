@@ -11,6 +11,15 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Access OneSignal App ID and REST API Key from environment variables
+ONESIGNAL_APP_ID = os.getenv('ONESIGNAL_APP_ID')
+ONESIGNAL_REST_API_KEY = os.getenv('ONESIGNAL_REST_API_KEY')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +49,9 @@ INSTALLED_APPS = [
     'api',
     'books',
     'graphene_django',
-    'kafka'
+    'kafka',
+    'push_notifications',
+    'onesignal'
 ]
 
 KAFKA_SETTINGS = {

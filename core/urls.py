@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('books/', include('books.urls')),
     path('kafka/', include('kafka.urls')),
+    path('onesignal/', include('onesignal.urls')),
 ]
