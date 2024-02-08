@@ -21,6 +21,11 @@ load_dotenv()
 ONESIGNAL_APP_ID = os.getenv('ONESIGNAL_APP_ID')
 ONESIGNAL_REST_API_KEY = os.getenv('ONESIGNAL_REST_API_KEY')
 
+# twilio creditential
+TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
+TWILIO_PHONE_NUMBER = os.getenv('TWILIO_PHONE_NUMBER')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -51,7 +56,7 @@ INSTALLED_APPS = [
     'graphene_django',
     'kafka',
     'push_notifications',
-    'onesignal'
+    'onesignal',
 ]
 
 KAFKA_SETTINGS = {

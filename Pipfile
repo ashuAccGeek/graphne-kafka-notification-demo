@@ -13,6 +13,7 @@ onesignal = "*"
 django-environ = "*"
 python-dotenv = "*"
 onesignal-sdk = "*"
+twilio = "*"
 
 [dev-packages]
 
