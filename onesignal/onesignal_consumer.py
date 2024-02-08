@@ -1,4 +1,5 @@
 from confluent_kafka import Consumer
+from onsignalNotifications import send_notification_onsignal
 
 consumer_config = {
     'bootstrap.servers': 'localhost:9092',
@@ -18,7 +19,21 @@ def consume_message(topic):
             if msg.error():
                 print("Consumer error: {}".format(msg.error()))
                 continue
-            print("Order placed with the following Details: {}".format(msg.value().decode('utf-8')))
+
+            # Extract necessary information from the Kafka message
+            message_data = msg.value().decode('utf-8')
+
+            # Construct notification payload
+            notification_body = {
+                'contents': {'en': message_data},
+                'included_segments': ['Active Users'],
+            }
+
+            # notification_payload = {
+            #     'contents': {'en': message_data},
+            # }
+            # Send push notification using OneSignal
+            send_notification_onsignal(notification_body)
     finally:
         consumer.close()
 

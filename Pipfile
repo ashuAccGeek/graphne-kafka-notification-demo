@@ -12,6 +12,7 @@ django-push-notifications = "*"
 onesignal = "*"
 django-environ = "*"
 python-dotenv = "*"
+onesignal-sdk = "*"
 
 [dev-packages]
 
